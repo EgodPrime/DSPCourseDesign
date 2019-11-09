@@ -1,0 +1,59 @@
+%% 测试 myDCT2.m 和 myIDCT2.m
+clc;clear;
+disp("测试多通道二维DCT和IDCT");
+
+% 读取图片
+img = imread('hasky.jpg');
+
+% 是否使用灰度图
+isgray = false;
+if isgray
+    img = rgb2gray(img);
+end
+
+% 变换与逆变换
+g = myDCT2(img);
+h = myIDCT2(g);
+
+% 检查图片相似度
+ok = mean(mean(mean(h==img)));
+fprintf("经过DCT变换和复原前后的平均像素相似度 ? %f\n",ok);
+
+% 画图比较
+subplot(2,1,1);
+imshow(img);title("原始图片");
+subplot(2,1,2);
+imshow(h);title("IDCT复原图片");
+
+disp("按任意键继续...");pause;
+%% 测试隐藏和解密文本信息
+clc;clear;
+disp("测试文本信息隐藏");
+
+% 读取图片
+img = imread('hasky.jpg');
+
+% 定义测试文本
+txt = "你已经暴露了，快撤退！";
+
+% 隐藏信息
+eimg = IMGencodeTXT(img,txt);
+
+% 画图比较
+subplot(2,1,1);
+imshow(img);title("原始图片");
+subplot(2,1,2);
+imshow(eimg);title("带信息的图片");
+
+% 测试图片相似度
+ok = mean(mean(mean(eimg==img)));
+fprintf("添加隐藏信息前后的平均像素相似度 ? %f\n",ok);
+
+% 提取信息(unfinished)
+% txt = IMGdecodeTXT(eimg);
+disp(txt);
+
+disp("按任意键继续...");pause;
+%%
+clc;clear;
+disp("测试结束");
