@@ -1,19 +1,36 @@
-function out = IMGencodeTXT(img)
-    X = myDCT2(img);
-    X = mod(X,2);
-    X = X(:);
-    out = bin2txt(X);
-end
-
-
-function txt = bin2txt(bin)
-    t = reshape(bin,[],8);
-    t(all(t==0,2))=[];
-    r = size(t,1);
-    txt = char(r,8);
-    for i = 1:r
-       for j = 1:8
-          txt(i,j) =  num2str(t(i,j));
+function out = IMGdecodeTXT(img)
+    [D,c] = blockDCT2(img);
+    if c == 1
+       info = [];
+       blocks = D.gray;
+       [rows8x8,cols8x8] = size(blocks); 
+       for i = rows8x8
+            for j = cols8x8
+                info = [info;decode8x8(blocks{i,j})];
+            end
        end
+       out = bin2txt(info);
+    else
+        blocksR = D.r;
+        blocksG = D.g;
+        blocksB = D.b;
+        [rows8x8,cols8x8] = size(blocksR);
+        info = [];
+        for i = rows8x8
+            for j = cols8x8
+                info = [info;decode8x8(blocksR{i,j})];
+            end
+        end
+        for i = rows8x8
+            for j = cols8x8
+                info = [info;decode8x8(blocksG{i,j})];
+            end
+        end
+        for i = rows8x8
+            for j = cols8x8
+                info = [info;decode8x8(blocksB{i,j})];
+            end
+        end
+        out = bin2txt(info);
     end
 end

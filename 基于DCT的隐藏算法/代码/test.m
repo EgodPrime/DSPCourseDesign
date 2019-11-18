@@ -49,11 +49,10 @@ imshow(eimg);title("带信息的图片");
 ok = mean(mean(mean(eimg==img)));
 fprintf("添加隐藏信息前后的平均像素相似度 ? %f\n",ok);
 
-% 提取信息(unfinished)
-% txt = IMGdecodeTXT(eimg);
-disp(txt);
+% 提取信息
+txt = IMGdecodeTXT(eimg);
+fprintf("提取出信息：%s\n",txt);
 
 disp("按任意键继续...");pause;
 %%
-clc;clear;
 disp("测试结束");
