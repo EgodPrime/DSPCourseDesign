@@ -10,12 +10,14 @@ function out = encode8x8(block,info)
               temp = block(r,c);
               block(r,c) = block(sr,sc);
               block(sr,sc) = temp;
+%              block(r,c) = block(sr,sc)*1.5;
           end
        else           % 第i个比特为0，则右上必须小于左下
            if block(r,c) > block(sr,sc) % 否则，交换位置
               temp = block(r,c);
               block(r,c) = block(sr,sc);
               block(sr,sc) = temp;
+%              block(sr,sc) = block(r,c)*1.5;
           end
        end
     end

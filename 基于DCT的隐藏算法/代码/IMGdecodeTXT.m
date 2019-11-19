@@ -1,5 +1,7 @@
 function out = IMGdecodeTXT(img)
+    % 获取 块胞 和 通道数
     [D,c] = blockDCT2(img);
+    % 获取尺寸
     if c == 1
        info = [];
        blocks = D.gray;

@@ -26,6 +26,17 @@ subplot(2,1,2);
 imshow(h);title("IDCT复原图片");
 
 disp("按任意键继续...");pause;
+%% 测试8x8加密与解密
+disp("测试8x8加密与解密")
+test_bin = [1 0 0 1 1 1 0 0];
+test_mat = randn(8,8);
+encoded_mat = encode8x8(test_mat,test_bin);
+decoded_bin = decode8x8(encoded_mat);
+disp("测试序列为:");disp(test_bin);
+subplot(1,2,1);imshow(test_mat);title("测试块");
+subplot(1,2,2);imshow(encoded_mat);title("加密块");
+disp("解密出信息:");disp(decoded_bin');
+disp("按任意键继续...");pause;
 %% 测试隐藏和解密文本信息
 clc;clear;
 disp("测试文本信息隐藏");
@@ -34,7 +45,7 @@ disp("测试文本信息隐藏");
 img = imread('hasky.jpg');
 
 % 定义测试文本
-txt = "你已经暴露了，快撤退！";
+txt = "eve is a super sb hahahaha !";
 
 % 隐藏信息
 eimg = IMGencodeTXT(img,txt);
