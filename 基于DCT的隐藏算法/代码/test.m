@@ -1,9 +1,11 @@
 %% 测试 myDCT2.m 和 myIDCT2.m
 clc;clear;
-disp("测试多通道二维DCT和IDCT");
+disp("测试多通道分块二维DCT和IDCT");
 
 % 读取图片
 img = imread('hasky.jpg');
+img = double(img);
+img = img/255;
 
 % 是否使用灰度图
 isgray = false;
@@ -12,12 +14,13 @@ if isgray
 end
 
 % 变换与逆变换
-g = myDCT2(img);
-h = myIDCT2(g);
+g = blockDCT2(img);
+h = blockIDCT2(g);
 
 % 检查图片相似度
-ok = mean(mean(mean(h==img)));
-fprintf("经过DCT变换和复原前后的平均像素相似度 ? %f\n",ok);
+diff = abs(h-img);
+ok = mean(mean(mean(diff<3*eps)));
+fprintf("【测试多通道分块DCT2变换】DCT2并还原前后平均像素相似度(+-3eps) ? %.2f\n",ok);
 
 % 画图比较
 subplot(2,1,1);
@@ -30,11 +33,15 @@ disp("按任意键继续...");pause;
 disp("测试8x8加密与解密")
 test_bin = [1 0 0 1 1 1 0 0];
 test_mat = randn(8,8);
-encoded_mat = encode8x8(test_mat,test_bin);
-decoded_bin = decode8x8(encoded_mat);
+test_Dmat = dct2(test_mat);
+encoded_Dmat = encode8x8(test_Dmat,test_bin);
+encoded_mat = idct2(encoded_Dmat);
+decoded_bin = decode8x8(dct2(encoded_mat));
 disp("测试序列为:");disp(test_bin);
-subplot(1,2,1);imshow(test_mat);title("测试块");
-subplot(1,2,2);imshow(encoded_mat);title("加密块");
+subplot(2,2,1);imshow(test_mat);title("测试块");
+subplot(2,2,2);imshow(test_Dmat);title("测试块DCT");
+subplot(2,2,3);imshow(encoded_Dmat);title("加密快DCT");
+subplot(2,2,4);imshow(test_Dmat==encoded_Dmat);title("加密前后异同");
 disp("解密出信息:");disp(decoded_bin');
 disp("按任意键继续...");pause;
 %% 测试隐藏和解密文本信息
@@ -43,9 +50,12 @@ disp("测试文本信息隐藏");
 
 % 读取图片
 img = imread('hasky.jpg');
+img = double(img);
+img = img/255;
 
 % 定义测试文本
-txt = "eve is a super sb hahahaha !";
+txt = "life is strugle but it's fair.";
+disp("测试信息为:");disp(txt);
 
 % 隐藏信息
 eimg = IMGencodeTXT(img,txt);
@@ -57,8 +67,9 @@ subplot(2,1,2);
 imshow(eimg);title("带信息的图片");
 
 % 测试图片相似度
-ok = mean(mean(mean(eimg==img)));
-fprintf("添加隐藏信息前后的平均像素相似度 ? %f\n",ok);
+diff = abs(eimg-img);
+ok = mean(mean(mean(diff<3*eps)));
+fprintf("【测试TXT信息隐藏】添加隐藏信息前后的平均像素相似度(+-3eps) ? %.2f\n",ok);
 
 % 提取信息
 txt = IMGdecodeTXT(eimg);

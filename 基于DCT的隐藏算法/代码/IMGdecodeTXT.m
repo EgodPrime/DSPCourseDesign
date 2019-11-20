@@ -1,38 +1,42 @@
 function out = IMGdecodeTXT(img)
-    % 获取 块胞 和 通道数
-    [D,c] = blockDCT2(img);
-    % 获取尺寸
-    if c == 1
-       info = [];
-       blocks = D.gray;
-       [rows8x8,cols8x8] = size(blocks); 
-       for i = rows8x8
-            for j = cols8x8
-                info = [info;decode8x8(blocks{i,j})];
+    D = blockDCT2(img);
+    % 获取 高、宽、通道数
+    [m,n,c] = size(D);
+    rows8x8 = m/8; % 方块行数
+    cols8x8 = n/8; % 方块列数
+    
+    out = string;
+    cnt = 1;
+    if c==3
+        while true
+            row = ceil(cnt/cols8x8);
+            col = mod(cnt,cols8x8);
+            if col == 0
+                col = 1;
             end
-       end
-       out = bin2txt(info);
+            channel = ceil(cnt/rows8x8/cols8x8);
+            temp = decode8x8(D(row*8-7:row*8,col*8-7:col*8,channel));
+            temp = bin2txt(temp);
+            if temp == "`"
+                break;
+            end
+            out = out + temp;
+            cnt = cnt+1;
+        end
     else
-        blocksR = D.r;
-        blocksG = D.g;
-        blocksB = D.b;
-        [rows8x8,cols8x8] = size(blocksR);
-        info = [];
-        for i = rows8x8
-            for j = cols8x8
-                info = [info;decode8x8(blocksR{i,j})];
+        while true
+            row = ceil(cnt/cols8x8);
+            col = mod(cnt,cols8x8);
+            if col == 0
+                col = 1;
             end
-        end
-        for i = rows8x8
-            for j = cols8x8
-                info = [info;decode8x8(blocksG{i,j})];
+            temp = decode8x8(D(row*8-7:row*8,col*8-7:col*8));
+            temp = bin2txt(temp);
+            if temp == "`"
+                break;
             end
+            out = out + temp;
+            cnt = cnt+1;
         end
-        for i = rows8x8
-            for j = cols8x8
-                info = [info;decode8x8(blocksB{i,j})];
-            end
-        end
-        out = bin2txt(info);
     end
 end
