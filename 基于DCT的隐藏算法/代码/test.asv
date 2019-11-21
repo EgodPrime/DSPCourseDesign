@@ -68,8 +68,8 @@ imshow(eimg);title("带信息的图片");
 
 % 测试图片相似度
 diff = abs(eimg-img);
-ok = mean(mean(mean(diff<5*eps)));
-fprintf("【测试TXT信息隐藏】添加隐藏信息前后的平均像素相似度(+-5eps) ? %.2f\n",ok);
+ok = mean(mean(mean(diff<3*eps)));
+fprintf("【测试TXT信息隐藏】添加隐藏信息前后的平均像素相似度(+-3eps) ? %.2f\n",ok);
 
 % 提取信息
 txt = IMGdecodeTXT(eimg);
@@ -86,21 +86,12 @@ img = double(img);
 img1 = img/255;
 
 img = imread('fox.jpg');
-img = imresize(img,0.5);
 img = double(img);
 img2 = img/255;
 
 % 图片隐藏图片
 img3 = IMGencodeIMG(img1,img2);
-diff = abs(img3-img1);
-ok = mean(mean(mean(diff<5*eps)));
-fprintf("【测试图片隐藏图片】添加隐藏信息前后的平均像素相似度(+-5eps) ? %.2f\n",ok);
-% 提取图片
-img4 = IMGdecodeIMG(img3,size(img2));
 
-subplot(2,2,1);imshow(img1);title("宿主图片");
-subplot(2,2,2);imshow(img2);title("被隐藏图片");
-subplot(2,2,3);imshow(img3);title("带信息图片");
-subplot(2,2,4);imshow(img4);title("提取出的图片");
+img4
 %%
 disp("测试结束");
