@@ -1,0 +1,8 @@
+function[es]=encode(msg,ori)
+len=length(msg);
+es = zeros(len,200);
+for i = 1:len
+    es(i,:)=add_echo(ori(i,:),30+ori(i)*20,0.6);
+end
+end
+
