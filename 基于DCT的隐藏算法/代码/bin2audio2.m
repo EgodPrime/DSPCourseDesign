@@ -10,5 +10,4 @@ function au = bin2audio2(bin)
     end
     
     au = gather(au);
-    
 end
