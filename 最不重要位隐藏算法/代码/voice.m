@@ -1,5 +1,12 @@
+function float=voice(m)
 ss=zeros(1,50);
-sign=0; 
+if m>0
+    sign=0;
+else
+    sign=1;
+    m=-m;
+end
+
 for i=1:50
     m=m*2;
     if(m<1)
@@ -11,23 +18,24 @@ for i=1:50
         i=i+1;
     end
 end
+
 %十进制浮点数转化为二进制
 for i=1:50
     if(ss(i)==0)
         i=i+1;
         continue
     else
-        k=i
         break
     end
 end
+k=i;
 %确定指数位
 
 exp=zeros(1,8);
 w=128-k;
 %指数位转化为二进制
 
-w1=dec2bin(w)
+w1=dec2bin(w);
 if(length(w1)<8)
     exp(1,8-length(w1))=0;
     for i=1:length(w1)
@@ -40,5 +48,5 @@ else
 end
 %填补指数位8位
 
-float=[sign,exp,ss(k+1:k+23)]
+float=[sign,exp,ss(k+1:k+23)];
     

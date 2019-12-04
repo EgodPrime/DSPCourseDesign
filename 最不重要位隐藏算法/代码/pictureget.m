@@ -1,3 +1,4 @@
+
 [hang,lie]=size(shadepix);
 decpixline=zeros(hang,1);
 for i=1:hang
