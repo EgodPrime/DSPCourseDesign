@@ -1,3 +1,4 @@
+function zss=zvoice(float)
 zsign=float(1)%·ûºÅÎ»
 exp1=0;
 for i=2:9
@@ -10,4 +11,10 @@ zss=0.0000000000000;
 for i=10:32
 zss=zss+float(i)*2^(zexp-i+9);
 end
-zss=zss+2^(zexp)
+zss=zss+2^(zexp);
+
+if (zsign==1)
+    zss=-zss;
+else
+    zss=zss;
+end

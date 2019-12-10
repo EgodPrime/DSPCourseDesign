@@ -1,6 +1,6 @@
 clear all;
 pix=imread('C:\Users\lenovo\Desktop\123.jpg');
-pix=imresize(pix,0.1);
+pix=imresize(pix,0.04);
 pix=double(pix);
 %¶ÁÈ¡Í¼Æ¬µÄÏñËØÖµ£¨a*b*3£©
 
