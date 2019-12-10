@@ -1,8 +1,8 @@
 function[binmark]=decode(len,ori,es)
-ori=reshape(ori(2000001:2000000+len*200),len,[]);
+ori=reshape(ori(1:len*2000),len,[]);
 binmark=zeros(len,1);
 for i=1:len
-    binmark(i)=get_echo(es(i,:),ori(i,:),30,50);
+    binmark(i)=get_echo(es(i,:),ori(i,:),800,1000);
 end
 end
 

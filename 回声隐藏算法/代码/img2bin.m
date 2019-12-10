@@ -9,6 +9,6 @@ function [bin,shape] = img2bin(img)
     bin = zeros(h*w*channel*3,1);
     for i = 1:h*w*channel
         temp = uint82bin(seq(i));
-        bin(i*4-3:i*4) = temp(1:4);
+        bin(i*4-3:i*4) = bin2gray(temp(1:4));
     end
 end

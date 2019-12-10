@@ -1,9 +1,9 @@
 function[es]=encode(msg,ori)
 len=length(msg);
-ori=reshape(ori(2000001:2000000+len*200),len,[]);
-es = zeros(len,200);
+ori=reshape(ori(1:len*2000),len,[]);
+es = zeros(len,2000);
 for i = 1:len
-    es(i,:)=add_echo(ori(i,:),30+msg(i)*20,0.1);
+    es(i,:)=add_echo(ori(i,:),800+msg(i)*200,0.4);
 end
 end
 
