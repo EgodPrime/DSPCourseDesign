@@ -1,4 +1,4 @@
-clc;clear;
+ clc;clear;
 %%
 %导入文件
 [ori_sample,fs]=audioread('AOA.mp3');%导入音频
@@ -6,7 +6,7 @@ check(ori_sample);
 pic=imread('eve.png');%导入水印图片
 pic=rgb2gray(pic);
 %pic=imresize(pic,[21,21]);
-pic = double(pic)/255;
+pic = double(pic)/255 ;
 subplot(1,2,1);
 imshow(pic);%展示原图
 
