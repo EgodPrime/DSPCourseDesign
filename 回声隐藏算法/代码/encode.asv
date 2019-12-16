@@ -1,9 +1,0 @@
-function[es]=encode(msg,ori)
-len=length(msg);
-ori=reshape(ori(1:len*),len,[]);
-es = zeros(len,length(ori)/len);
-for i = 1:len
-    es(i,:)=add_echo(ori(i,:),30+msg(i)*20,0.6);
-end
-end
-
