@@ -6,10 +6,6 @@ x1 = fft(raw);
 x2 = log(x1);
 x3 = ifft(x2);
 
-
-% d = max(x3(m1-3:m1+3),x3(m2-3:m2+3));
-% loc1=find(max(x3(m1-3:m1+3)));%原始语音倒谱值比较
-% loc2=find(max(x3(m2-3:m2+3)));
 p0 = x3(m1+1); p1 = x3(m2+1);
 d0 = y3(m1+1); d1 = y3(m2+1);
 if d0-p0 > d1-p1

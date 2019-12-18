@@ -1,5 +1,6 @@
 function[binmark]=decode(len,ori,es)
 ori=reshape(ori(1:len*2000),len,[]);
+es=reshape(es(1:len*2000),len,[]);
 binmark=zeros(len,1);
 for i=1:len
     binmark(i)=get_echo(es(i,:),ori(i,:),800,1000);
